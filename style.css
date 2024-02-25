@@ -1,0 +1,41 @@
+h1{text-align: center;}
+*{font-family: Arial, Helvetica, sans-serif;}
+input:valid{
+    background-color: rgba(7, 245, 7, 0.432);
+}
+
+div#bloco{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    width: 200px;
+
+
+}
+table{
+    border-spacing: 0px;
+
+}
+table td{
+    border: solid rgb(4, 0, 255) 2px;
+align-items: center;
+align-content: center;
+padding: 12px;
+text-align: center;
+font-weight: 600;
+
+}
+#cabeca{
+    text-transform: uppercase;
+    font-weight: 700;
+    
+}
+#cabeca td{
+    text-transform: uppercase;
+    font-weight: 700;
+    border: solid rgb(3, 3, 255) 2px;
+    background-color: aquamarine;
+}

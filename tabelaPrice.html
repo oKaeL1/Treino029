@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela Price</title>
+    <script src="javs.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Calculadora de Empréstimo</h1>
+    <div id="bloco">
+    <div class="divEmComum">
+        <label for="emprestimo">Empréstimo:</label>
+        <input type="number"  id="emprestimo" value="15000" pattern="/d" required placeholder="Valor Inicial"></div>
+
+    <div class="divEmComum">
+        <label for="juros">Juros (em meses):</label>
+        <input type="number" id="juros" value="2" pattern="/d" required placeholder="Juros (por mês)"></div>
+
+    <div class="divEmComum">
+        <label for="meses">Meses</label>
+        <input type="number" id="meses" value="10" pattern="/d" required placeholder="Meses"></div>
+    <button id="enviar">Enviar</button>
+    <div>
+        <table>
+            <thead>
+
+            </thead>
+            <tbody>
+<tr id="cabeca">
+    <td>Prestação:</td>
+    <td>Juros:</td>
+    <td>Amortização:</td>
+    <td>Saldo Devedor:</td>
+    <td>Meses:</td>
+</tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
