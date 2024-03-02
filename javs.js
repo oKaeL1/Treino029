@@ -3,6 +3,7 @@
 const send=document.querySelector("#enviar")
 send.addEventListener("click", enviar)
 const tabela=document.querySelector("div table")
+const tcorpo=document.querySelector("div table tbody")
 const selectTabela=document.querySelector("select#selecionarTabela")
 let isPrice;
 let isSAC;
@@ -63,7 +64,7 @@ for(let i=1;i<=mesesReal;i++){
         </tr>
     `;
 
-    tabela.insertAdjacentHTML("beforeend", linha);
+    tcorpo.insertAdjacentHTML("beforeend", linha);
     emprestimoProv -= amortizacao;
 }
 
@@ -71,28 +72,26 @@ for(let i=1;i<=mesesReal;i++){
         while(tabela.rows.length>1){
             tabela.deleteRow(1)
         }
-        let emprestimoTotalSac=emprestimoTotal
+        let emprestimoTotalSac=Number(emprestimoTotal)
 for(let mesVisi=1; mesVisi<=mesesReal; mesVisi++){
 
 let jurosSac=(jurosTotal*emprestimoTotalSac)/100
 let amortizaSac=emprestimoTotal/mesesReal
 let prestaçãoTotalSac=amortizaSac+jurosSac
 
-let tabelaSac=`
+const tabelaSac=`
 <tr>
 <td>${mesVisi}°</td>
-<td>R$ ${emprestimoTotalSac}</td>
+<td>R$ ${emprestimoTotalSac.toFixed(2)}</td>
 <td>R$ ${prestaçãoTotalSac.toFixed(2)}</td>
 <td>R$ ${jurosSac.toFixed(2)}</td>
 <td>R$ ${amortizaSac.toFixed(2)}</td>
 </tr>
 `
 emprestimoTotalSac-=amortizaSac
-
-tabela.insertAdjacentHTML("beforeend", tabelaSac)
+tcorpo.insertAdjacentHTML("beforeend", tabelaSac)
 }
 
 
     }
 }
-console.log(0.01)
