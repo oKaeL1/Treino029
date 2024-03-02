@@ -8,12 +8,20 @@ div#bloco{
 
     display: flex;
     flex-direction: column;
+    align-items: right;
+    justify-content: center;
+    margin: auto;
+    width: 400px;
+
+
+}
+div#tabela{
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: auto;
     width: 200px;
-
-
 }
 table{
     border-spacing: 0px;
@@ -38,4 +46,12 @@ font-weight: 600;
     font-weight: 700;
     border: solid rgb(3, 3, 255) 2px;
     background-color: aquamarine;
+}
+table{margin-top:20px}
+
+.divEmComum{
+    margin-top: 20px;
+}
+button#enviar{
+    margin-top: 30px;
 }

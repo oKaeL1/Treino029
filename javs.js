@@ -1,43 +1,98 @@
 "use strict"
+
 const send=document.querySelector("#enviar")
 send.addEventListener("click", enviar)
 const tabela=document.querySelector("div table")
+const selectTabela=document.querySelector("select#selecionarTabela")
+let isPrice;
+let isSAC;
+function trocarTabela(tabelaValor){
+switch(tabelaValor){
+    case "1":  isPrice=true
+    isSAC=false
+    break
+    case "2":
+         isSAC=true
+         isPrice=false
+    break
+    default:isSAC,isPrice=false
+}
+}
+
 function enviar(){
-   let quantidadeDeLinhas= tabela.rows.length
-   let row=tabela.insertRow(quantidadeDeLinhas)
-    let amortiza;
-let emprestimoTotal=document.querySelector("#emprestimo").value
+    let emprestimoTotal=document.querySelector("#emprestimo").value
 const jurosTotal=document.querySelector("#juros").value
 
 let mesesReal=document.querySelector("#meses").value
-let prestaçãoTotal=((1+jurosTotal/100)**mesesReal), prestaçãoProva=(((1+jurosTotal/100)**mesesReal)-1)
-prestaçãoTotal=emprestimoTotal*(prestaçãoTotal*(jurosTotal/100)/prestaçãoProva)
+if(mesesReal<=0 || mesesReal.length==0 || jurosTotal.length==0 || jurosTotal<=0 || emprestimoTotal<=0 || emprestimoTotal.length==0){
+    const popUp=document.createElement("dialog")
+    const corpo=document.body
+    corpo.appendChild(popUp)
+   popUp.showModal()
+popUp.textContent="Por favor insira valores válidos"
+const fechar=document.createElement("button")
+fechar.style.cssText="display:block;margin:auto;"
+fechar.textContent="Fechar"
+fechar.onclick=()=>{popUp.remove()}
+
+popUp.appendChild(fechar)
+}
+
+const jurosReal=jurosTotal/100
+    if(isPrice){
+    while(tabela.rows.length>1){
+        tabela.deleteRow(1)
+    }
+    
+
+let prestaçãoTotalPrice=((1+jurosTotal/100)**mesesReal), prestaçãoProva=(((1+jurosTotal/100)**mesesReal)-1)
+prestaçãoTotalPrice=emprestimoTotal*(prestaçãoTotalPrice*(jurosTotal/100)/prestaçãoProva)
 
 let emprestimoProv=Number(emprestimoTotal)
-let mesesFake=1
-for(let jurosReal=Number(jurosTotal)/100;mesesFake<=mesesReal;mesesFake++){
-    console.log(emprestimoProv)
-    let indi=0
-    row=tabela.insertRow(quantidadeDeLinhas)
-    let mesesVisi=row.insertCell(indi)
-    let emprestimoVisi= row.insertCell(indi)
-    let amortizaVisi=row.insertCell(indi)
-    let jurosVisi=row.insertCell(indi)
-    let prestacaoVisi=row.insertCell(indi)
-    mesesVisi.textContent=mesesFake+"°"
-    emprestimoVisi.textContent="R$ "+emprestimoProv.toFixed(2)
-    prestacaoVisi.textContent="R$ "+prestaçãoTotal.toFixed(2)
-indi++
-    
-jurosReal=jurosTotal/100
-jurosReal*=emprestimoProv
+for(let i=1;i<=mesesReal;i++){
+    const juros = emprestimoProv * jurosReal;
+    const amortizacao = prestaçãoTotalPrice - juros;
 
-amortiza=prestaçãoTotal-jurosReal
-emprestimoProv=emprestimoProv-amortiza
-amortizaVisi.textContent="R$ "+amortiza.toFixed(2)
-jurosVisi.textContent="R$"+jurosReal.toFixed(2)
+    const linha = `
+        <tr>
+            <td>${i}</td>
+            <td>R$ ${emprestimoProv.toFixed(2)}</td>
+            <td>R$ ${prestaçãoTotalPrice.toFixed(2)}</td>
+            <td>R$ ${juros.toFixed(2)}</td>
+            <td>R$ ${amortizacao.toFixed(2)}</td>
+        </tr>
+    `;
 
+    tabela.insertAdjacentHTML("beforeend", linha);
+    emprestimoProv -= amortizacao;
+}
+
+    } else if(isSAC){
+        while(tabela.rows.length>1){
+            tabela.deleteRow(1)
+        }
+        let emprestimoTotalSac=emprestimoTotal
+for(let mesVisi=1; mesVisi<=mesesReal; mesVisi++){
+
+let jurosSac=(jurosTotal*emprestimoTotalSac)/100
+let amortizaSac=emprestimoTotal/mesesReal
+let prestaçãoTotalSac=amortizaSac+jurosSac
+
+let tabelaSac=`
+<tr>
+<td>${mesVisi}°</td>
+<td>R$ ${emprestimoTotalSac}</td>
+<td>R$ ${prestaçãoTotalSac.toFixed(2)}</td>
+<td>R$ ${jurosSac.toFixed(2)}</td>
+<td>R$ ${amortizaSac.toFixed(2)}</td>
+</tr>
+`
+emprestimoTotalSac-=amortizaSac
+
+tabela.insertAdjacentHTML("beforeend", tabelaSac)
 }
 
 
+    }
 }
+console.log(0.01)
